@@ -70,9 +70,9 @@
       var hashData = hash.split('&')
 
       return hashData.reduce((obj, data) => {
-        var [key, value] = data.split('=')
-        key = decodeURIComponent(key)
-        value = decodeURIComponent(value)
+        var keyValue = data.split('=')
+        var key = decodeURIComponent(keyValue[0])
+        var value = decodeURIComponent(keyValue[1])
 
         obj[key] = value
         return obj
