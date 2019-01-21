@@ -11,11 +11,12 @@
   <script>
     var player;
 
+    var hash = parseHashString(document.location.hash)
+    var videoId = hash.v
+
     function onYouTubePlayerAPIReady() {
       var playerVars = {}
 
-      var hash = parseHashString(document.location.hash)
-      var videoId = hash.v
       var time = toSeconds(parseTime(hash.t))
 
       if (time > 0) playerVars.start = time
@@ -78,6 +79,27 @@
         return obj
       }, {})
     }
+
+    // Check every minute if the video is still working, if not, restart it...
+    const UNSTARTED = -1
+    const ENDED =  0
+    const PLAYING =  1
+    const PAUSED =  2
+    const BUFFERING =  3
+    const VIDEOCUED =  5
+
+    setInterval(function () {
+      var currentState = player.getPlayerState()
+
+      if (currentState === BUFFERING) {
+        var seconds = player.getCurrentTime()
+
+        player.loadVideoById({
+          videoId: videoId,
+          startSeconds: seconds
+        })
+      }
+    }, 1 * 60 * 1000)
   </script>
 
   <style>
