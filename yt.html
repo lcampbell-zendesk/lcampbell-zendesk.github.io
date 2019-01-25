@@ -48,6 +48,8 @@
          function onPlayerReady(event) {
              player.mute();
              player.playVideo();
+             const randomPosition = Math.random() * player.getDuration();
+             player.seekTo(randomPosition, true);
          }
 
          function onStateChange(event) {
