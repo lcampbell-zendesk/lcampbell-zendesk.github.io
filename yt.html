@@ -21,10 +21,15 @@
 
         <script type="application/javascript">
          // yt.html?v=3rDjPLvOShM&v=6uhRxK_EOm4&v=AF93R3FwWAQ&v=wnhvanMdx4s&v=2R2gb0MKJlo&v=AgpWX18dby4&v=Y53k5YCL93c&v=PzVA6gYtPc0&v=Pi3BpEDqowk&v=FSdi3STy0YA&v=Xjs6fnpPWy4&v=XVkADAwOXnU
-         window.setTimeout(() => window.location.reload(), minutes(1));
 
          var player;
          const queryString = parseQuery(window.location.search);
+
+         // Rotation minutes
+         const rotationMinutes = (queryString.get('rotationMinutes') || [])[0] || 30;
+         window.setTimeout(() => window.location.reload(), minutes(rotationMinutes));
+
+         // Random video selection
          const videos = queryString.get("v");
          const videoId = videos[Math.floor(Math.random() * videos.length)];
 
